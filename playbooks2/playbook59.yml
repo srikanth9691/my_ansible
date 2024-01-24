@@ -1,0 +1,41 @@
+---
+- name: configuring s/w's with loops
+  hosts: all
+  become: yes
+  tasks:
+    - name: install tomcat9
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      with_items:
+        - tomcat9
+        - tomcat9-admin
+        - apache2
+    - name: copy tomcat-users.xml
+      copy:
+        src: tomcat-users.xml
+        dest: /etc/tomcat9
+    - name: change port number
+      replace:
+        regexp: 1991
+        replace: 8080
+        path: /etc/tomcat9/server.xml      
+    - name: restart tomcat9
+      service:
+        name: tomcat9
+        state: restarted
+    - name: pause tomcat9
+      pause:
+        seconds: 60      
+    - name: check url responce in server 1
+      uri:
+        url: http:65.2.132.136 
+        status_code: 200
+    - name: check url responce in server2
+      uri:
+        url: http:13.232.178.226
+        status_code: 200
+...
+        
+

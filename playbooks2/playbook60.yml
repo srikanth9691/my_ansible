@@ -1,0 +1,18 @@
+---
+- name: configuring s/w's with loops
+  hosts: all
+  become: yes
+  tasks:
+    - name: install tomcat9
+      apt:
+        name: "{{item.a}}"
+        state: "{{item.b}}"
+        update_cache: "{{item.c}}"
+      with_items:
+        - { a: tomcat9, b: absent, c: yes}
+        - { a: tomcat9-admin, b: absent, c: no}
+        - { a: apache2, b: absent, c: no}
+
+...
+        
+

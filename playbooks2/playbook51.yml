@@ -1,0 +1,14 @@
+---
+- name: install s/w
+  hosts: all
+  become: yes
+  tasks:
+    - name: install git
+      apt:
+        name: git
+        state: latest
+        update_cache: yes
+
+...
+
+

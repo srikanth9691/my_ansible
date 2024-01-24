@@ -1,0 +1,10 @@
+---
+- name: implementing error handling
+  hosts: all
+  become: yes
+  tasks:
+    - block:
+       
+
+
+
