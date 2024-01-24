@@ -1,0 +1,21 @@
+---
+- name: fetch the file from server to controller
+  hosts: 13.233.233.8
+  tasks:
+    - name: fetch file to controller 
+      fetch:
+        src: file99
+        dest: /tmp
+- name: fetch the file from server to controller
+  hosts: 13.201.5.102
+  tasks:
+    - name: copy file to server 2
+      copy:
+        src: /tmp/13.233.233.8/file99
+        dest: /tmp
+...
+
+
+
+     
+

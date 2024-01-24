@@ -1,0 +1,12 @@
+---
+- name: create user
+  hosts: all
+  tasks:
+    - name: creation of user
+      user:
+        name: spr
+        password: 1234
+        home: /tmp/spr
+        shell: /bin/bash
+        uid: 4455
+...

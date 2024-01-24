@@ -1,0 +1,39 @@
+---
+- name: install required softwares on remote servers
+  hosts: all
+  tasks:
+    - name: install tomcat9
+      apt:
+        name: tomcat9
+        state: present
+        update_cache: yes
+    - name: install tomcat9-admin
+      apt:
+        name: tomcat9-admin
+        state: present
+    - name: copy tomcat-users.xml file
+      copy: 
+        src: tomcat-users.xml
+        dest: /etc/tomcat9
+    - name: change port number
+      replace:
+        regexp: 8080
+        replace: 9090
+        path: /etc/tomcat9/server.xml   
+    - name: restart tomcat
+      service:
+        name: tomcat9
+        state: restarted
+    - name: pause tomcat9 for 60 seconds
+      pause:
+        seconds: 60
+    - name: check tomcat resonce on server 1
+      uri:
+        url: http://65.2.172.200
+        status_code: 200    
+    - name: check tomcat responce on server 2
+      uri:
+        url: htt://172.31.42.10O
+        status_code: 200
+...
+              
