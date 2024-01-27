@@ -1,0 +1,38 @@
+- name: continuous Download and continuous Build
+  hosts: dev
+  tasks:
+    - name: download dev code from github
+      git:
+        repo: https://github.com/intelliqittrainings/maven.git
+        dest: dev-git
+
+    - name: creat artifacts from the downloaded code
+      shell: cd dev-git;mvn package
+    - name: fetch artifact to the controller
+      fetch:
+        src: dev-git/webapp/target/webapp.war
+        dest: /tmp
+- name: continuous deployment and continuous testing
+  hosts: QA
+  tasks:
+    - name: deploy artifact into tomcat on the QA server
+      copy:
+        src: /tmp/35.183.43.45/dev-git/webapp/target/webapp.war
+        dest: /var/lib/tomcat9/webapps/testapp.war 
+    - name: download selenium script from github
+      git:
+        repo: https://github.com/intelliqittrainings/FunctionalTesting.git 
+        dest: test-git
+    - name: execute the selenium scripts 
+      shell: java -jar test-git/testing.jar      
+- name: contiuous delivery
+  hosts: Prod
+  tasks:
+    - name: deploy artifact into Prod server
+      copy:
+        src: /tmp/35.183.43.45/dev-git/webapp/target/webapp.war
+        dest: /var/lib/tomcat9/webapps/Prodapp.war
+
+  
+
+

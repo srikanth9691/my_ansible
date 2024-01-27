@@ -1,0 +1,21 @@
+---
+- name: install jenkins and required s/w
+  hosts: jenkins
+  tasks:
+    - name: install required s/w
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      with_items:
+        - openjdk-11-jdk
+        - git
+        - maven
+    - name: download jenkins.war
+      get_url: 
+        url: https://get.jenkins.io/war-stable/2.426.3/jenkins.war
+        dest: /home/ubuntu
+        
+         
+
+        

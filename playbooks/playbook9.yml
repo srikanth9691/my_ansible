@@ -1,0 +1,9 @@
+---
+- name: install tomcat using host scope variables
+  hosts: 172.31.42.100
+  tasks:
+    - name: install tomcat9
+      apt:
+        name: "{{a}}"
+        state: "{{b}}"
+        update_cache: "{{c}}"

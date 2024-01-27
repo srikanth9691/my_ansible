@@ -1,0 +1,21 @@
+---
+- name: capture on name
+  hosts: all
+  tasks:
+    - name: capture server os name 
+      debug:
+        msg: "{{ansible_distribution}}" 
+    - name: uninstall tomcat9
+      apt:
+        name: tomcat9
+        state: absent
+    - name: edit index.html
+      copy:
+        content: love you forever
+        dest: /var/www/html/index.html
+      when: ansible_distribution == "ubuntu"
+    - name: restart apache2
+      service:
+        name: apache2
+        state: restarted  
+    

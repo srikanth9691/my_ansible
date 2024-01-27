@@ -1,0 +1,16 @@
+---
+- name: check for dir d55 is executable if executable then delete f55 dir
+  hosts: all
+  tasks:
+    - name: check for d55 executable 
+      stat:
+        path: /home/ubuntu/d55
+      register: b
+    - name: display output of above command   
+      debug:
+        var: b
+    - name: delete f55 dir
+      file:
+        name: f55
+        state: absent
+      when: b. stat. executable == true       

@@ -1,0 +1,56 @@
+---
+- name: install jenkins and required s/w
+  hosts: dev
+  tasks:
+    - name: install required s/w
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      with_items:
+        - openjdk-11-jdk
+        - git
+        - maven
+    - name: download jenkins.war
+      get_url: 
+        url: https://get.jenkins.io/war-stable/2.426.3/jenkins.war
+        dest: /home/ubuntu
+- name: install required s/w on QA server
+  hosts: QA
+  tasks:
+    - name: insatll required s/w
+      apt: 
+        name: "{{item.a}}"
+        state: "{{item.b}}"
+        update_cache: "{{item.c}}"
+      with_items:  
+        - {a: git,b: present,c: yes} 
+        - {a: tomcat9,b: present,c: no}
+        - {a: tomcat9-admin,b: present,c: no}
+        - {a: openjdk-11-jdk,b: present,c: no}
+- name: install required s/w on prod server
+  hosts: Prod
+  tasks:
+    - name: insatll required s/w
+      apt:
+        name: "{{item.a}}"
+        state: "{{item.b}}"
+        update_cache: "{{item.c}}"
+      with_items:
+        - {a: tomcat9,b: present,c: yes}
+        - {a: tomcat9-admin,b: present,c: no}
+- name: continuous Download and continuous Build
+  hosts: dev
+  tasks:
+    - name: download dev code from github
+      git:
+        repo: https://github.com/intelliqittrainings/maven.git
+        dest: dev-git
+         
+    - name: creat artifacts from the downloaded code
+      shell: cd dev-git;mvn package
+
+
+
+
+        

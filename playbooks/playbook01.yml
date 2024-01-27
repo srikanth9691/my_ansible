@@ -1,0 +1,7 @@
+---  
+- name: install tomcat9
+  apt:
+    name: tomcat9
+    state: present
+    update_cache: yes
+...      

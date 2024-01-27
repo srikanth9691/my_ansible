@@ -1,0 +1,18 @@
+---
+- name: implementing error handling
+  hosts: all
+  tasks:
+    - block:
+       - name: install git using yum on redhat server
+         yum: 
+           name: git
+           state: present
+           update_cache: yes
+      rescue:    
+        - name: install git using apt on ubuntu server
+          apt: 
+            name: git
+            state: present
+            update_cache: yes
+
+

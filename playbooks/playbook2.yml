@@ -1,0 +1,27 @@
+---
+- name: install required softwares
+  hosts: all
+  tasks:
+    - name: install apache2
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+    - name: edit the index.html file
+      copy:
+        content: hi nani
+        dest: /var/www/html/index.html
+    - name: restart apache2
+      service:
+        name: apache2
+        state: restarted
+    - name: check apache2 responce on server 1
+      uri:
+        url: http://52.66.199.118
+        status_code: 200
+    - name: check apache2 responce on server 2
+      uri:
+        url: http://65.1.2.108
+        status_code: 200
+...
+      

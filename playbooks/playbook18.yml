@@ -1,0 +1,16 @@
+---
+- name: check if file1 is present if not create a dir d55
+  hosts: all
+  tasks:
+    - name: check for file1 
+      stat:
+        path: /home/ubuntu/file1
+      register: a
+    - name: dispilay output of above command   
+      debug:
+        var: a 
+    - name: create d55 dir
+      file:
+        name: d55
+        state: directory
+      when: a.stat.exists == false       

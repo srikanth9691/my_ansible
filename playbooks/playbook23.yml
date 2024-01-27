@@ -1,0 +1,8 @@
+---
+- name: calling chaild playbook
+  hosts: servers
+  tasks:
+    - name: call chaild playbook
+      include: playbook01.yml
+...        
+

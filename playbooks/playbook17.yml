@@ -1,0 +1,12 @@
+---
+- name: implementing when conditions
+  hosts: all
+  vars:
+    - a: 10
+  tasks:
+    - name: install tomcat9
+      apt:
+        name: tomcat9
+        state: present
+        update_cache: yes
+      when: a == 10       
